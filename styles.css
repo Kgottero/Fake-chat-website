@@ -103,6 +103,8 @@ header img{
     (max-width:800px){
 
         .container{
-            height:60vh;
+            height:100vh;
+            border:none;
+            width:80vw;
         }
 }
