@@ -120,6 +120,7 @@ header img{
     .container{
         width:80vw;
         height:90vh;
+        border:solid 1px;
     }
 
     header{
