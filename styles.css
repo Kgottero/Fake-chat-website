@@ -168,6 +168,7 @@ header img{
     .container{
         width:95vw;
         height:85vh;
+        border:solid 1px;
     }
 
     header{
