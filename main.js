@@ -1,141 +1,90 @@
-   /* 
-const input = document.querySelector('.text');
+  const input = document.querySelector('.text');
 const button = document.querySelector('.send-button');
-const message = document.querySelector('.message');
-const reply = document.querySelector('.reply')
-button.addEventListener('click', () => {
-    message.classList.add('js-message');
+const chatBody = document.querySelector('.body');
 
-    message.innerHTML = input.value;
-    input.value = '';
-    const greetings = ['Hello', 'Hi', 'hello', 'hi', 'hey man'];
+button.addEventListener('click', runText);
 
-    greetings.forEach((text, index)=>{
-        if (message.innerHTML = text){
-       setTimeout(()=>{
-        reply.classList.add('js-reply');
-        reply.innerHTML = 'Typing....';
-        setTimeout(()=>{
-            reply.innerHTML = 'Hey how are you?'
-        }, 2000)
-        console.log(index);
-        console.log(text);
-       }, 2000);
-
-    }
-    else {
-        setTimeout(()=>{
-        reply.classList.add('js-reply');
-        reply.innerHTML = 'Typing....';
-        setTimeout(()=>{
-            reply.innerHTML = 'i dont understand'
-        }, 2000)
-
-       }, 2000);
-
-    }
-});
-    })
-
-
-    if (message.innerHTML === 'Hello' || message.innerHTML === 'Hi' ){
-       setInterval(()=>{
-        reply.classList.add('js-reply');
-        reply.innerHTML = 'Typing....';
-        setInterval(()=>{
-            reply.innerHTML = 'Hey how are you?'
-        }, 2000)
-
-       }, 2000);
-
-    }
-    else {
-        setInterval(()=>{
-        reply.classList.add('js-reply');
-        reply.innerHTML = 'Typing....';
-        setInterval(()=>{
-            reply.innerHTML = 'i dont understand'
-        }, 2000)
-
-       }, 2000);
-
+input.addEventListener('keyup', (event) => {
+    if (event.key === 'Enter') {
+        runText();
     }
 });
 
-*/
-const input = document.querySelector('.text');
-const button = document.querySelector('.send-button');
-const message = document.querySelector('.message');
-const reply = document.querySelector('.reply');
-input.addEventListener('keyup',(event)=>{
-    if (event.key === 'Enter'){
-        runText()
-    }
-    });
-button.addEventListener('click', () => {
-    const userMessage = input.value;
-    const greetings = ['Hello', 'Hi', 'hello', 'hi', 'hey man'];
- const questions = ['How are you?', 'how are you'];
-const farewells = ['bye', 'goodbye', 'see you soon'];
-const compliments = ['You are smart', 'You are quick'];
+function runText() {
+    const userMessage = input.value.trim();
 
-    message.classList.add('js-message');
-    message.innerHTML = userMessage;
+    if (userMessage === '') {
+        return;
+    }
+
+    const greetings = ['hello', 'hi', 'hey man'];
+    const questions = ['how are you?', 'how are you'];
+    const farewells = ['bye', 'goodbye', 'see you soon'];
+    const compliments = ['you are smart', 'you are quick'];
+
+    chatBody.innerHTML += `
+        <p class="message">${userMessage}</p>
+        <p class="reply">Typing...</p>
+    `;
 
     input.value = '';
+
+    const allReplies = document.querySelectorAll('.reply');
+    const lastReply = allReplies[allReplies.length - 1];
+
     setTimeout(() => {
-        reply.classList.add('js-reply');
-        reply.innerHTML = 'Typing....';
-        setTimeout(()=>{
-            if (greetings.includes(userMessage)) {
-    reply.innerHTML = 'Hey how are you?';
-}
-else if (questions.includes(userMessage)) {
-    reply.innerHTML = 'I am fine.';
-}
-else if (farewells.includes(userMessage)) {
-    reply.innerHTML = 'See you later!';
-}
-else if (compliments.includes(userMessage)) {
-    reply.innerHTML = 'Thank you!'
-}
-else {
-    reply.innerHTML = "I don't understand";
-}
-        }, 2000)
+        const lowerMessage = userMessage.toLowerCase();
+
+        if (greetings.includes(lowerMessage)) {
+            randomReply(
+                lastReply,
+                'Hey, how are you?',
+                "Hey, how's your day?",
+                'Hey man'
+            );
+        }
+
+        else if (questions.includes(lowerMessage)) {
+            randomReply(
+                lastReply,
+                'Never been better.',
+                "Man I've been great.",
+                'I am fine :)'
+            );
+        }
+
+        else if (farewells.includes(lowerMessage)) {
+            randomReply(
+                lastReply,
+                'See you later.',
+                'See you soon.',
+                'Have a good day.'
+            );
+        }
+
+        else if (compliments.includes(lowerMessage)) {
+            lastReply.innerHTML = 'Thank you!';
+        }
+
+        else {
+            lastReply.innerHTML = "I don't understand.";
+        }
+
     }, 2000);
-});
+}
 
-function runText () {
-    const userMessage = input.value;
-    const greetings = ['Hello', 'Hi', 'hello', 'hi', 'hey man'];
- const questions = ['How are you?', 'how are you'];
-const farewells = ['bye', 'goodbye', 'see you soon'];
-const compliments = ['You are smart', 'You are quick'];
+function randomReply(replyBox, firstReply, secondReply, thirdReply) {
+    const randomNum = Math.random();
 
-    message.classList.add('js-message');
-    message.innerHTML = userMessage;
+    if (randomNum <= 1 / 3) {
+        replyBox.innerHTML = firstReply;
+    }
 
-    input.value = '';
-    setTimeout(() => {
-        reply.classList.add('js-reply');
-        reply.innerHTML = 'Typing....';
-        setTimeout(()=>{
-            if (greetings.includes(userMessage)) {
-    reply.innerHTML = 'Hey how are you?';
+    else if (randomNum <= 2 / 3) {
+        replyBox.innerHTML = secondReply;
+    }
+
+    else {
+        replyBox.innerHTML = thirdReply;
+    }
 }
-else if (questions.includes(userMessage)) {
-    reply.innerHTML = 'I am fine.';
-}
-else if (farewells.includes(userMessage)) {
-    reply.innerHTML = 'See you later!';
-}
-else if (compliments.includes(userMessage)) {
-    reply.innerHTML = 'Thank you!'
-}
-else {
-    reply.innerHTML = "I don't understand";
-}
-        }, 2000)
-    }, 2000);
-};
