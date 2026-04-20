@@ -3,12 +3,15 @@ const button = document.querySelector('.send-button');
 const chatBody = document.querySelector('.body');
 
 button.addEventListener('click', runText);
+input.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    event.preventDefault(); // important if inside a form
+    runText();
 
-input.addEventListener('keyup', (event) => {
-    if (event.key === 'Enter') {
+    setTimeout(() => {
       input.blur();
-        runText();
-    }
+    }, 0);
+  }
 });
 
 function runText() {
