@@ -6,6 +6,7 @@ button.addEventListener('click', runText);
 
 input.addEventListener('keyup', (event) => {
     if (event.key === 'Enter') {
+      input.blur();
         runText();
     }
 });
